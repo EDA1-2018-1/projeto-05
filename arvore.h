@@ -1,5 +1,5 @@
-#ifndef TREE_H
-#define TREE_H
+#ifndef ARVORE_H
+#define ARVORE_H
 
 typedef struct no {
   int info;
@@ -8,14 +8,17 @@ typedef struct no {
 } No;
 
 
-void loadTreeFromFile();
-void showTree();
-void isFull();
-void searchValue();
-void removeValue();
-void printInOrder();
-void printPreOrder();
-void printPostOrder();
-void balanceTree();
+No *removeValue(No *raiz,int info);
+No *loadTreeFromFile(char arquivo[]);
+No *balanceTree(No *raiz);
 
-int getHeight();
+int getHeight(No *raiz);
+
+void showTree(No *raiz);
+void isFull(No *raiz);
+void searchValue(No *raiz,int info);
+void printInOrder(No *raiz);
+void printPreOrder(No *raiz);
+void printPostOrder(No *raiz);
+
+#endif

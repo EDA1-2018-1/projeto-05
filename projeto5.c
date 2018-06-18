@@ -96,7 +96,7 @@ char menu(){
   do{
     system("clear");
     printf("\n");
-    printf("==========================================");
+    printf("==============================================\n");
     printf("||\t1 - Mostrar arvore                  ||\n");
     printf("||\t2 - Verificar se a arvore é cheia   ||\n");
     printf("||\t3 - Procurar o numero na arvore     ||\n");
@@ -107,7 +107,7 @@ char menu(){
     printf("||\t8 - Printar - Post Order            ||\n");
     printf("||\t9 - Balancear arvore                ||\n");
     printf("||\t0 - Sair                            ||\n");
-    printf("==========================================");
+    printf("==============================================\n\n");
     scanf("%c",&select);
     limpaBuff();
   } while(select < '0' || select > '9');

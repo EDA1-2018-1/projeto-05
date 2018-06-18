@@ -41,7 +41,7 @@ int main(int argc, char const *argv[]) {
         showTree(raiz);
         scanf("%d",&num);
         getchar();
-        printf("%d\n",num);
+        printf("\n\nValor procurado: %d\n\n",num);
         searchValue(raiz,num);
         break;
 
@@ -82,6 +82,7 @@ int main(int argc, char const *argv[]) {
 
       case '0':
         liberaArvore(raiz);
+        printf("\nTchau :)\n");
     }
 
     if (select != '0'){
@@ -137,14 +138,16 @@ No *selecionaArquivo(){
   do{
       system("clear");
       printf("\n");
-      printf("Selecione um dos arquivos abaixo, ou digite 0 para utilizar um arquivo pessoal.\n\n");
-      printf("\t1 - bst1.txt\n\n");
-      printf("\t2 - bst2.txt\n\n");
-      printf("\t3 - bst3.txt\n\n");
-      printf("\t4 - bst4.txt\n\n");
-      printf("\t5 - bst5.txt\n\n");
-      printf("\t6 - bst6.txt\n\n");
-      printf("\t0 - Utilizar arquivo pessoal\n\n");
+      printf("Selecione um dos arquivos abaixo, ou digite 0 para utilizar um arquivo pessoal:\n\n");
+      printf("================================\n");
+      printf("||  1 - bst1.txt              ||\n");
+      printf("||  2 - bst2.txt              ||\n");
+      printf("||  3 - bst3.txt              ||\n");
+      printf("||  4 - bst4.txt              ||\n");
+      printf("||  5 - bst5.txt              ||\n");
+      printf("||  6 - bst6.txt              ||\n");
+      printf("||  0 - Utilizar seu arquivo  ||\n");
+      printf("================================\n\n");
       scanf("%c",&arquivo);
       limpaBuff();
     } while(arquivo < '0' || arquivo > '6');

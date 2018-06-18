@@ -17,6 +17,7 @@ int verificaBalanceamento(No *raiz);
 No *rotaciona(No *raiz, No *pai, No *raizReal);
 No *rodaEsq(No *raiz, No *pai, No *raizReal);
 No *rodaDir(No *raiz, No *pai, No *raizReal);
+
 No *removeRaiz(No *raiz);
 No *verificaValor(No *raiz,No *pai);
 No *procuraSucessor(No *Raiz);
@@ -115,7 +116,7 @@ No *balanceTree(No *raiz){
    }
    if(!verificaBalanceamento(raiz)){
      do{
-       raiz = rotaciona(raiz,NULL,raiz);
+       raiz = rotaciona(raiz, NULL, raiz);
      } while(!verificaBalanceamento(raiz));
    }
 
@@ -411,14 +412,14 @@ void searchValue(No *raiz,int info){
 
   else{
 
-    printf("\nNivel : %d\n",nivel);
+    printf("Nivel   : %d\n",nivel);
 
     if (pai != NULL){
-      printf("\nPai : %d\n",pai->info);
+      printf("Pai     : %d\n",pai->info);
     }
 
     if (irmao != NULL){
-      printf("\nIrmão : %d\n",irmao->info);
+      printf("Irmão   : %d\n",irmao->info);
     }
   }
 }
@@ -507,6 +508,7 @@ void showTree(No *raiz){
     }
     printf("\n");
   }
+  puts("");
 
    for(int i=0; i < height; i++){
       free(*(matrixTree+i));
@@ -536,5 +538,4 @@ void encheMatriz(int **matrixTree,char **matrixTreeChar,No *raiz,int altura,int 
     encheMatriz(matrixTree,matrixTreeChar,raiz->dir,altura,linha+1,coluna+aux);
   }
 }
-//---------------------------------------------------------------
 //---------------------------------------------------------------

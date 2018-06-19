@@ -1,3 +1,9 @@
+/*
+    Érico Bandeira - 16/0070287
+    Luciana Ribeiro Lins de Albuquerque - 15/0016131
+    Max Henrique Barbosa - 16/0047013
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -348,41 +354,42 @@ No *achaSucessor(No *raiz){
 }
 //---------------------------------------------------------------
 int getHeight(No *raiz){
-  if (raiz == NULL){
-    return 0;
-  }
+    int u, v;
 
-  if (getHeight(raiz->esq) > getHeight(raiz->dir)){
-    return 1 + getHeight(raiz->esq);
-  }
+    if (raiz == NULL)
+        return 0;
 
-  else{
-    return 1 + getHeight(raiz->dir);
-  }
+    u = getHeight(raiz->esq);
+    v = getHeight(raiz->dir);
+
+    if (u > v)
+        return u+1;
+
+    return v+1;
 }
 //---------------------------------------------------------------
 void printPostOrder(No *raiz){
-   if (raiz != NULL){
-     printPostOrder(raiz->esq);
-     printPostOrder(raiz->dir);
-     printf(" - %d - ",raiz->info);
-   }
+   if(raiz == NULL)
+       return;
+   printPostOrder(raiz->esq);
+   printPostOrder(raiz->dir);
+   printf("%d ", raiz->info);
  }
 //---------------------------------------------------------------
 void printPreOrder(No *raiz){
-   if (raiz != NULL){
-     printf(" - %d - ",raiz->info);
-     printPreOrder(raiz->esq);
-     printPreOrder(raiz->dir);
-   }
+   if(raiz == NULL)
+       return;
+   printf("%d ", raiz->info);
+   printPreOrder(raiz->esq);
+   printPreOrder(raiz->dir);
  }
 //---------------------------------------------------------------
 void printInOrder(No *raiz){
-   if (raiz != NULL){
-     printInOrder(raiz->esq);
-     printf(" - %d - ",raiz->info);
-     printInOrder(raiz->dir);
-   }
+   if(raiz == NULL)
+       return;
+   printInOrder(raiz->esq);
+   printf("%d ", raiz->info);
+   printInOrder(raiz->dir);
  }
 //---------------------------------------------------------------
 void searchValue(No *raiz,int info){
@@ -476,7 +483,7 @@ void showTree(No *raiz){
 
   retiraEspacos(matrizBarra, height, &inicio, &fim);
 
-  for (int j = inicio; j < fim; j++){
+  for (int j = inicio; j <= fim; j++){
     if (j != (int)(pow(2,height)-1)/2){
       printf(" ");
     }
@@ -489,7 +496,7 @@ void showTree(No *raiz){
   printf("\n");
 
   for (int i = 0; i < height-1; i++){
-    for (int j = inicio; j < fim; j++){
+    for (int j = inicio; j <= fim; j++){
       if (matrizBarra[i][j] == '/' || matrizBarra[i][j] == '\\'){
         for(int aux = matrizNum[i+1][j]/10; aux != 0; aux = aux/10){
           printf(" ");
@@ -503,7 +510,7 @@ void showTree(No *raiz){
     }
     printf("\n");
 
-    for (int j = inicio; j < fim; j++){
+    for (int j = inicio; j <= fim; j++){
       if (matrizBarra[i][j] == '/' || matrizBarra[i][j] == '\\'){
         printf("%d",matrizNum[i+1][j]);
       }

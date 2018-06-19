@@ -8,7 +8,7 @@
 //---------------------------------------------------------------
 //DECLARAÇÃO DE FUNÇÕES
 
-void insereNo(No *raiz, No *aux);
+void insere(No *raiz, No *aux);
 void encheMatriz(int **matrizNum,char **matrizBarra,No *raiz,int altura,int nivel,int coluna);
 void retiraEspacos(char **matrizBarra,int height, int *inicio, int *fim);
 
@@ -22,7 +22,7 @@ No *rodaDir(No *raiz, No *pai, No *raizReal);
 
 No *removeRaiz(No *raiz);
 No *verificaValor(No *raiz,No *pai);
-No *procuraSucessor(No *Raiz);
+No *achaSucessor(No *Raiz);
 //---------------------------------------------------------------
 No *loadTreeFromFile(char arquivo[]){
   FILE *arq;
@@ -58,19 +58,19 @@ No *loadTreeFromFile(char arquivo[]){
     aux->info = info;
     aux->dir = NULL;
     aux->esq = NULL;
-    insereNo(raiz,aux);
+    insere(raiz,aux);
   }
   fclose(arq);
   return raiz;
 }
 //---------------------------------------------------------------
-void insereNo(No *raiz,No *aux){
+void insere(No *raiz,No *aux){
   if (raiz->info < aux->info){
     if (raiz->dir == NULL){
       raiz->dir = aux;
     }
     else{
-      insereNo(raiz->dir,aux);
+      insere(raiz->dir,aux);
     }
   }
   else{
@@ -78,7 +78,7 @@ void insereNo(No *raiz,No *aux){
       raiz->esq = aux;
     }
     else{
-      insereNo(raiz->esq,aux);
+      insere(raiz->esq,aux);
     }
   }
 }
@@ -256,7 +256,7 @@ No *removeRaiz(No *raiz){
   No *aux;
   if (raiz->dir != NULL || raiz->esq != NULL){
     if (raiz->dir != NULL && raiz->esq != NULL){
-      aux = procuraSucessor(raiz);
+      aux = achaSucessor(raiz);
       free(aux);
       return raiz;
     }
@@ -285,7 +285,7 @@ No *removeRaiz(No *raiz){
 No *verificaValor(No *raiz,No *pai){
   if (raiz->dir != NULL || raiz->esq != NULL){
     if (raiz->dir != NULL && raiz->esq != NULL){
-      return procuraSucessor(raiz);
+      return achaSucessor(raiz);
     }
 
     else{
@@ -328,7 +328,7 @@ No *verificaValor(No *raiz,No *pai){
   }
 }
 //---------------------------------------------------------------
-No *procuraSucessor(No *raiz){
+No *achaSucessor(No *raiz){
     No *sucessor, *pai, *aux;
     int info;
 

@@ -9,7 +9,9 @@
 //DECLARAÇÃO DE FUNÇÕES
 
 void insereNo(No *raiz, No *aux);
-void encheMatriz(int **matrixTree,char **matrixTreeChar,No *raiz,int altura,int nivel,int coluna);
+void encheMatriz(int **matrizNum,char **matrizBarra,No *raiz,int altura,int nivel,int coluna);
+void retiraEspacos(char **matrizBarra,int height, int *inicio, int *fim);
+
 
 int verificaCheia(No *raiz);
 int verificaBalanceamento(No *raiz);
@@ -430,33 +432,35 @@ void showTree(No *raiz){
   }
 
   int height = getHeight(raiz);
-  int **matrixTree = (int **) calloc (height,sizeof(int*));
+  int inicio = 0;
+  int fim = (pow(2,height)-1)/2;
+  int **matrizNum = (int **) calloc (height,sizeof(int*));
 
-  if(matrixTree == NULL){
+  if(matrizNum == NULL){
      puts("Alocação Falhou!");
      exit(1);
   }
 
   for (int i = 0; i < (height); i++){
-     *(matrixTree+i) = (int*)calloc(pow(2,height)-1,sizeof(int));
+     *(matrizNum+i) = (int*)calloc(pow(2,height)-1,sizeof(int));
 
-     if(*(matrixTree+i) == NULL){
+     if(*(matrizNum+i) == NULL){
         puts("Alocação Falhou!");
         exit(1);
      }
   }
 
-  char **matrixTreeChar = (char **) calloc (height-1,sizeof(char*));
+  char **matrizBarra = (char **) calloc (height-1,sizeof(char*));
 
-  if(matrixTreeChar == NULL){
+  if(matrizBarra == NULL){
      puts("Alocação Falhou!");
      exit(1);
   }
 
   for (int i = 0; i < (height-1); i++){
-     *(matrixTreeChar+i) = (char*)calloc(pow(2,height)-1,sizeof(char));
+     *(matrizBarra+i) = (char*)calloc(pow(2,height)-1,sizeof(char));
 
-     if(*(matrixTreeChar+i) == NULL){
+     if(*(matrizBarra+i) == NULL){
         puts("Alocação Falhou!");
         exit(1);
      }
@@ -464,31 +468,33 @@ void showTree(No *raiz){
 
   for (int i = 0; i < height-1; i++){
     for (int j = 0; j < pow(2,height)-1; j++){
-      matrixTreeChar[i][j] = ' ';
+      matrizBarra[i][j] = ' ';
     }
   }
 
-  encheMatriz(matrixTree,matrixTreeChar,raiz,height,0,(pow(2,height)-1)/2);
+  encheMatriz(matrizNum,matrizBarra,raiz,height,0,(pow(2,height)-1)/2);
 
-  for (int j = 0; j < pow(2,height)-1; j++){
+  retiraEspacos(matrizBarra, height, &inicio, &fim);
+
+  for (int j = inicio; j < fim; j++){
     if (j != (int)(pow(2,height)-1)/2){
       printf(" ");
     }
 
     else{
-      printf("%d",matrixTree[0][j]);
+      printf("%d",matrizNum[0][j]);
     }
   }
 
   printf("\n");
 
   for (int i = 0; i < height-1; i++){
-    for (int j = 0; j < pow(2,height)-1; j++){
-      if (matrixTreeChar[i][j] == '/' || matrixTreeChar[i][j] == '\\'){
-        for(int aux = matrixTree[i+1][j]/10; aux != 0; aux = aux/10){
+    for (int j = inicio; j < fim; j++){
+      if (matrizBarra[i][j] == '/' || matrizBarra[i][j] == '\\'){
+        for(int aux = matrizNum[i+1][j]/10; aux != 0; aux = aux/10){
           printf(" ");
         }
-        printf("%c",matrixTreeChar[i][j]);
+        printf("%c",matrizBarra[i][j]);
       }
 
       else{
@@ -497,13 +503,13 @@ void showTree(No *raiz){
     }
     printf("\n");
 
-    for (int j = 0; j < pow(2,height)-1; j++){
-      if (matrixTreeChar[i][j] == '/' || matrixTreeChar[i][j] == '\\'){
-        printf("%d",matrixTree[i+1][j]);
+    for (int j = inicio; j < fim; j++){
+      if (matrizBarra[i][j] == '/' || matrizBarra[i][j] == '\\'){
+        printf("%d",matrizNum[i+1][j]);
       }
 
       else{
-        printf("%c",matrixTreeChar[i][j]);
+        printf("%c",matrizBarra[i][j]);
       }
     }
     printf("\n");
@@ -511,31 +517,47 @@ void showTree(No *raiz){
   puts("");
 
    for(int i=0; i < height; i++){
-      free(*(matrixTree+i));
+      free(*(matrizNum+i));
    }
 
-   free(matrixTree);
+   free(matrizNum);
 
    for(int i=0; i < height-1; i++){
-      free(*(matrixTreeChar+i));
+      free(*(matrizBarra+i));
    }
 
-   free(matrixTreeChar);
+   free(matrizBarra);
 
 }
 //---------------------------------------------------------------
-void encheMatriz(int **matrixTree,char **matrixTreeChar,No *raiz,int altura,int linha,int coluna){
+void encheMatriz(int **matrizNum,char **matrizBarra,No *raiz,int altura,int linha,int coluna){
   int aux = pow(2,altura-2-linha);
-  * (*(matrixTree+linha)+coluna) = raiz->info;
+  * (*(matrizNum+linha)+coluna) = raiz->info;
 
   if (raiz->esq != NULL){
-    * (*(matrixTreeChar+linha)+coluna-aux) = '/';
-    encheMatriz(matrixTree,matrixTreeChar,raiz->esq,altura,linha+1,coluna-aux);
+    * (*(matrizBarra+linha)+coluna-aux) = '/';
+    encheMatriz(matrizNum,matrizBarra,raiz->esq,altura,linha+1,coluna-aux);
   }
 
   if (raiz->dir != NULL){
-    * (*(matrixTreeChar+linha)+coluna+aux) = '\\';
-    encheMatriz(matrixTree,matrixTreeChar,raiz->dir,altura,linha+1,coluna+aux);
+    * (*(matrizBarra+linha)+coluna+aux) = '\\';
+    encheMatriz(matrizNum,matrizBarra,raiz->dir,altura,linha+1,coluna+aux);
+  }
+}
+//---------------------------------------------------------------
+void retiraEspacos(char **matrizBarra,int height, int *inicio, int *fim){
+  for (int j = 0; j < pow(2,height)-1; j++){
+    for (int i = 0; i < height-1; i++){
+      if (matrizBarra[i][j] == '/' || matrizBarra[i][j] == '\\'){
+        if (! *inicio) {
+          *inicio = j;
+        }
+
+        if (*fim < j) {
+          *fim = j;
+        }
+      }
+    }
   }
 }
 //---------------------------------------------------------------
